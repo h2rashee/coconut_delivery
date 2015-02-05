@@ -4,7 +4,7 @@ mileCost = 0
 
 # Stores the dynamic programming results of the minimum cost of getting to the
 # end point of that jetstream (matches jetstream index number as above)
-endOfJsCost = []
+endOfStreamCost = []
 
 # Stores whether the matching jetstream (index) had it's minimal cost derived
 # through a previous jetstream or none
@@ -26,7 +26,7 @@ def findMinCostPath():
         for j in range(0, i):
             # Only use the stream if it's end is before the current's start
             if jetStreams[j][1] <= jetStreams[i][0]:
-                curCost = usePreviousStream(i, j)
+                curCost = usePreviousStreamCost(i, j)
             # All the streams from hereinafter,
             else:
                 # have their end after the current's start so we stop
@@ -39,7 +39,7 @@ def findMinCostPath():
 
         # Cost of using a previous stream but not the current one
         for j in range(0, i):
-            curCost = endOfJsCost[j] + \
+            curCost = endOfStreamCost[j] + \
                         getStretchCost(jetStreams[j][1], jetStreams[i][1])
 
             if curCost < minCost:
@@ -48,12 +48,12 @@ def findMinCostPath():
                 prevUsedStream = j
 
         # Add the minimum cost to our memoisation storing minimum costs for JSes
-        endOfJsCost.append(minCost)
+        endOfStreamCost.append(minCost)
         prevStreamUsed.append(prevUsedStream)
-    return endOfJsCost[-1]
+    return endOfStreamCost[-1]
 
 
-def usePreviousStream(cur, prev):
+def usePreviousStreamCost(cur, prev):
     '''Calculate the cost of using a previous stream (given the index),'''
     '''walking to the current stream and then using the current stream'''
 
@@ -61,7 +61,7 @@ def usePreviousStream(cur, prev):
     #2) The cost of walking from the previous jetstream to the current one.
     #3) The cost of using the current jetstream
 
-    return endOfJsCost[prev] + \
+    return endOfStreamCost[prev] + \
             getStretchCost(jetStreams[prev][1], jetStreams[cur][0]) + \
             jetStreams[cur][2]
 
