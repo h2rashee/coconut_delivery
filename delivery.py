@@ -26,13 +26,11 @@ def findMinCostPath():
 
         # Cost of using a previous stream and the current one
         for j in range(0, i):
-            # Only use the stream if it's end is before the current's start
-            if jetStreams[j][1] <= jetStreams[i][0]:
-                curCost = usePreviousStreamCost(i, j)
             # All the streams from hereinafter,
-            else:
+            if jetStreams[j][1] > jetStreams[i][0]:
                 # have their end after the current's start so we stop
                 break
+            curCost = usePreviousStreamCost(i, j)
 
             if curCost < minCost:
                 minCost = curCost
