@@ -16,7 +16,7 @@ def findMinCostPath():
     '''for a swallow making efficient use of the jetstreams'''
 
     for i in range(0, len(jetStreams)):
-        # Cost of walking to all the way to the current stream and then using it
+        # Cost of walking to all the way to the current stream and using it
         walkAllTheWay = getStretchCost(0, jetStreams[i][0]) + jetStreams[i][2]
         minCost = walkAllTheWay
         # Keep track that there was no previous stream we used here
@@ -40,14 +40,14 @@ def findMinCostPath():
         # Cost of using a previous stream but not the current one
         for j in range(0, i):
             curCost = endOfStreamCost[j] + \
-                        getStretchCost(jetStreams[j][1], jetStreams[i][1])
+                getStretchCost(jetStreams[j][1], jetStreams[i][1])
 
             if curCost < minCost:
                 minCost = curCost
                 # Keep track of the chain of jetstreams we used
                 prevUsedStream = j
 
-        # Add the minimum cost to our memoisation storing minimum costs for JSes
+        # Add the minimum cost to our memoisation of minimum costs for JSes
         endOfStreamCost.append(minCost)
         prevStreamUsed.append(prevUsedStream)
     return endOfStreamCost[-1]
@@ -62,8 +62,8 @@ def usePreviousStreamCost(cur, prev):
     #3) The cost of using the current jetstream
 
     return endOfStreamCost[prev] + \
-            getStretchCost(jetStreams[prev][1], jetStreams[cur][0]) + \
-            jetStreams[cur][2]
+        getStretchCost(jetStreams[prev][1], jetStreams[cur][0]) + \
+        jetStreams[cur][2]
 
 
 def getStretchCost(start, end):
@@ -92,7 +92,6 @@ def getOptimalJetStreams():
     return usingJetStreams
 
 
-
 # MAIN/DRIVER
 if __name__ == "__main__":
     try:
@@ -105,7 +104,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Sort the jetstreams by their ending point
-    jetStreams = sorted(jetStreams, key=lambda x:x[1])
+    jetStreams = sorted(jetStreams, key=lambda x: x[1])
 
     print findMinCostPath()
     print getOptimalJetStreams()
