@@ -1,3 +1,5 @@
+#Author: Harris Rasheed
+
 # Variables initialised on start-up
 jetStreams = []
 mileCost = 0
